@@ -67,7 +67,7 @@ function BottomTabNavigator() {
         component={ShoppingList}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
           title: 'Shopping List',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="list-alt" color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
