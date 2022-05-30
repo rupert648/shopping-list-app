@@ -7,6 +7,7 @@ import ListItem from '../components/ShoppingList/ListItem';
 
 export default function ShoppingList() {
   const [itemsList, setItemsList] = useState<Array<string>>(['hello', 'nice']);
+  const [selectMode, setSelectMode] = useState<boolean>(false);
 
   const updateItem = (text: string, index: number) => {
     setItemsList(itemsList.map((item, index2) => 
@@ -43,6 +44,8 @@ export default function ShoppingList() {
             updateValue={updateItem}
             insertAfter={insertAfterItem}
             removeItem={removeItem}
+            selectMode={selectMode}
+            setSelectMode={setSelectMode}
           />) :
           <IconButton 
                 icon="plus"
