@@ -4,10 +4,12 @@ import { IconButton, Colors } from 'react-native-paper';
 import { View } from '../components/Themed';
 import ListItemWrapper from '../components/ShoppingList/ListItemWrapper';
 import ListItem from '../components/ShoppingList/ListItem';
+import SelectMenu from '../components/ShoppingList/SelectMenu';
 
 export default function ShoppingList() {
   const [itemsList, setItemsList] = useState<Array<string>>(['hello', 'nice']);
   const [selectMode, setSelectMode] = useState<boolean>(false);
+  const [selectedItems, setSelectedItems] = useState<Array<number>>([]);
 
   const updateItem = (text: string, index: number) => {
     setItemsList(itemsList.map((item, index2) => 
@@ -26,14 +28,28 @@ export default function ShoppingList() {
   }
 
   const removeItem = (index: number) => {
+    // update the list of items
     const newList = [...itemsList];
     newList.splice(index, 1);
     setItemsList(newList)
+
+    // remove from list of checked items
+    setSelectedItems(selectedItems.filter(item => item !== index))
+  }
+
+  const deleteCheckedItems = () => {
+    // remove from items list
+    const newList = itemsList.filter((_v, index) => !selectedItems.includes(index))
+    setItemsList(newList);
+    // clear checked items
+    setSelectedItems([]);
+    setSelectMode(false);
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      { selectMode && <SelectMenu selectMode={selectMode} setSelectMode={setSelectMode} deleteCheckedItems={deleteCheckedItems}/>}
+
       <ListItemWrapper>
         {
           itemsList.length > 0 ?
@@ -44,6 +60,8 @@ export default function ShoppingList() {
             updateValue={updateItem}
             insertAfter={insertAfterItem}
             removeItem={removeItem}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
             selectMode={selectMode}
             setSelectMode={setSelectMode}
           />) :
