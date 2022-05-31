@@ -1,6 +1,10 @@
 import BackgroundFetch from "react-native-background-fetch"
 import PushNotifaction from "react-native-push-notification";
 
+import { getCurrentPositionAsync } from 'expo-location';
+
+import { getClosestSupermarketDistance } from './Location';
+
 function backgroundNotificationInit() {
     PushNotifaction.configure({
         onNotification: notification => console.log(notification),
@@ -17,20 +21,23 @@ function backgroundNotificationInit() {
     BackgroundFetch.configure({
         minimumFetchInterval: 15,
     }, async taskId => {
-        console.log(`background fetch event: ${taskId}`);
+        try {
+            const location = await getCurrentPositionAsync({});
 
-        // TODO: data task
-        const data = 0;
-        if (data <= 0) {
+            const { SUPERMARKET: supermarketName, distance } = await getClosestSupermarketDistance(location);
+
             PushNotifaction.localNotification({
                 title: "Shopping List",
-                message: "Don't forget to check your shopping list for what you need to buy!",
+                message: `Don't forget to check your shopping list for what you need to buy!\n Nearest shop: ${supermarketName}, ${distance} metres away.`,
                 // TODO: mess with these values for perfect notification sound!
                 playSound: true,
                 soundName: 'default',
                 vibrate: true,
                 vibration: 1,
             })
+
+        } catch (error) {
+            console.log("error whilst getting location/supermarket")
         }
 
         // call finish upon task compeition;
