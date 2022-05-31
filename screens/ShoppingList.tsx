@@ -17,7 +17,7 @@ export default function ShoppingList() {
       ? item = text 
       : item 
     ))
-    // focus on the next 
+    // TODO: focus on the next 
   }
 
   const insertAfterItem = (index: number) => {

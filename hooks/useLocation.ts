@@ -4,7 +4,7 @@ import * as Location from 'expo-location';
 export default function useLocation() {
   const [status, setStatus] = useState<Location.PermissionStatus>();
 
-  // Load any resources or data that we need prior to rendering the app
+  // requests the user for permission to use location
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
