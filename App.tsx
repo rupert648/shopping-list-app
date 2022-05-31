@@ -5,6 +5,7 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import useLocation from './hooks/useLocation';
 import Navigation from './navigation';
+import LocationNotificationWrapper from './notifications/LocationNotificationWrapper';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -17,10 +18,12 @@ export default function App() {
     return null;
   } else {
     return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
+      <LocationNotificationWrapper>
+        <SafeAreaProvider>
+          <Navigation colorScheme={colorScheme} />
+          <StatusBar />
+        </SafeAreaProvider>
+      </LocationNotificationWrapper>
     );
   }
 }
