@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 
-export default function useCachedResources() {
+export default function useLocation() {
   const [status, setStatus] = useState<Location.PermissionStatus>();
 
   // Load any resources or data that we need prior to rendering the app
