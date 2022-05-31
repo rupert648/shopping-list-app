@@ -1,33 +1,22 @@
 import supermarketData from '../data/SupermarketsUK.json';
-import * as Location from 'expo-location';
+import { LocationObject } from 'expo-location';
+
+import { SuperMarketDto } from '../constants/Dtos';
 
 const EARTH_RADIUS = 6371e3;
 
-
-// {
-//     "SID": "1.000000000000000",
-//     "LON": "-3.180560000000000",
-//     "LAT": "55.936669999999900",
-//     "NAME": "EDINBURGH CAUSEWAYSIDE EXPRESS",
-//     "SUPERMARKET": "Tesco"
-// }
-interface SuperMarketDto {
-    SID: string,
-    LON: string,
-    LAT: string,
-    NAME: string,
-    SUPERMARKET: string,
-}
-
-async function getClosestSupermarket(userLocation: Location.LocationObject): Promise<SuperMarketDto | null> {   
-    let location = await Location.getCurrentPositionAsync({});
-
+/**
+ * Uses the stored list of supermarket locations to discover the closest supermarket, given the users current location.
+ * @param userLocation the current location of the user.
+ * @returns The closest supermarket object + the distance between the user and that supermarket.
+ */
+export async function getClosestSupermarketDistance(userLocation: LocationObject): Promise<SuperMarketDto & { distance: number }> {   
     // iterate through all locations and find closest
     try {
         const dataTransformed = supermarketData as Array<SuperMarketDto>;
 
-        let closest: SuperMarketDto | null = null;
-        let closestDistance = Number.MAX_VALUE;
+        let closest: SuperMarketDto = dataTransformed[0];
+        let closestDistance = calculateDistance(userLocation, closest);
 
         dataTransformed.forEach(supermarket => {
             const distance = calculateDistance(userLocation, supermarket);
@@ -38,7 +27,10 @@ async function getClosestSupermarket(userLocation: Location.LocationObject): Pro
             }
         })
 
-        return closest;
+        return {
+            ...closest,
+            distance: closestDistance
+        };
 
     } catch {
         return Promise.reject("error reading supermarket data");
@@ -50,7 +42,7 @@ async function getClosestSupermarket(userLocation: Location.LocationObject): Pro
  * @param userLocation the users current location returned by expo-location
  * @param supermarket a given supermarket.
  */
-function calculateDistance(userLocation: Location.LocationObject, supermarket: SuperMarketDto): number {
+export function calculateDistance(userLocation: LocationObject, supermarket: SuperMarketDto): number {
     const { coords: { latitude: userLat, longitude: userLong } } = userLocation;
     const supermarketLat = parseFloat(supermarket.LAT);
     const supermarketLong = parseFloat(supermarket.LON);
