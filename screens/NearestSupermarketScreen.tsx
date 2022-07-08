@@ -2,11 +2,15 @@ import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
+import NearestSuperMarketDisplay from '../components/NearestSupermarket/NearestSuperMarketDisplay';
 
-export default function ModalScreen() {
+export default function NearestSupermarketScreen() {
+  
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Modal</Text>
+      <Text style={styles.title}>Nearest Supermarket:</Text>
+      <NearestSuperMarketDisplay />
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
 
       {/* Use a light status bar on iOS to account for the black space above the modal */}

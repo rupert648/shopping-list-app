@@ -12,7 +12,7 @@ import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
+import NearestSupermarketScreen from '../screens/NearestSupermarketScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import ShoppingList from '../screens/ShoppingList';
 import Settings from '../screens/Settings';
@@ -41,7 +41,7 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen name="Modal" component={NearestSupermarketScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -75,7 +75,7 @@ function BottomTabNavigator() {
                 opacity: pressed ? 0.5 : 1,
               })}>
               <FontAwesome
-                name="info-circle"
+                name="shopping-cart"
                 size={25}
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}

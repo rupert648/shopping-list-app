@@ -78,7 +78,6 @@ export default function LocationNotificationWrapper({ children }: LocationNotifi
 
     }, [expoPushToken])
 
-    // handle notifications in here
     return (
         <>
             {children}

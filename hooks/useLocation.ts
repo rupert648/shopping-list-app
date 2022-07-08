@@ -7,7 +7,7 @@ export default function useLocation() {
   // requests the user for permission to use location
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+      const { status } = await Location.requestForegroundPermissionsAsync();
       setStatus(status);
     })();
   }, []);

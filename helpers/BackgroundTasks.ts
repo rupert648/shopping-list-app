@@ -23,7 +23,7 @@ function setupBackgroundTask(expoPushToken: string) {
         } catch (error) {
             console.log("error whilst getting location/supermarket")
         }  
-        // Be sure to return the successful result type!
+        // return the successful result type
         return BackgroundFetch.BackgroundFetchResult.NewData;
     });
 }

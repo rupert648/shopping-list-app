@@ -10,6 +10,7 @@ Notifications.setNotificationHandler({
       shouldSetBadge: false,
     }),
 });
+
 /**
  * async function to register notifications on the device
  * from https://docs.expo.dev/push-notifications/overview/
